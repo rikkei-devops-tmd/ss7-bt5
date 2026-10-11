@@ -6,7 +6,7 @@ BAI 5: CHAN DOAN VA XU LY XUNG DOT CONG MANG (ADDRESS ALREADY IN USE)
 - Xu ly su co loi thuong gap Address already in use khi deploy ung dung.
 
 2. BOI CANH VA GIA LAP SU CO
-- Boi canh: Khi khoi chay ung dung Spring Boot o cong 8082, he thong bao loi xung dot cong ket noi do co mot tien trinh khac dang chay ngam chiem giu cong nay.
+- Boi canh: Khi khoi chay ung dung Spring Boot o cong 8082 tai VPS 103.20.102.126, he thong bao loi xung dot cong ket noi do co mot tien trinh khac dang chay ngam chiem giu cong nay.
 - Gia lap cong 8082 bi chiem dung duoi nen:
 ```bash
 python3 -m http.server 8082 > /dev/null 2>&1 &
@@ -15,7 +15,7 @@ python3 -m http.server 8082 > /dev/null 2>&1 &
 3. QUY TRINH CHAN DOAN VA XAC DINH TIEN TRINH XUNG DOT
 
 3.1. Kiem tra cong mang dang lang nghe
-Lenh thuc hien bang ss:
+Lenh thuc hien bang ss tren VPS 103.20.102.126:
 ```bash
 sudo ss -tlnp | grep 8082
 ```
@@ -24,7 +24,7 @@ Ket qua dau ra:
 LISTEN 0 5 0.0.0.0:8082 0.0.0.0:* users:(("python3",pid=14238,fd=3))
 ```
 
-Lenh thuc hien bang lsof:
+Lenh thuc hien bang lsof tren VPS 103.20.102.126:
 ```bash
 sudo lsof -i :8082
 ```
@@ -69,7 +69,7 @@ sudo systemctl restart spring-app.service
 5. KIEM TRA VA XAC NHAN KET QUA
 
 5.1. Kiem tra tien trinh dang giu cong 8082
-Lenh thuc hien:
+Lenh thuc hien tren VPS 103.20.102.126:
 ```bash
 sudo ss -tlnp | grep 8082
 ```
@@ -86,4 +86,4 @@ sudo systemctl status spring-app.service
 Ket qua: Dich vu hoat dong o trang thai active (running).
 
 6. TEP TIN DINH KEM
-- troubleshoot_report.md: Bao cao chi tiet qua trinh chan doan va chuoi lenh xu ly su co.
+- troubleshoot_report.md: Bao cao chi tiet qua trinh chan doan va chuoi lenh xu ly su co tren may chu VPS 103.20.102.126.

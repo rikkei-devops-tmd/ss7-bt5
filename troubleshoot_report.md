@@ -1,10 +1,14 @@
 BAO CAO CHAN DOAN VA XU LY XUNG DOT CONG MANG (PORT CONFLICT TROUBLESHOOT REPORT)
 
 1. THONG TIN SU CO
-- Su co: Address already in use khi khoi chay ung dung Spring Boot tren cong 8082.
-- Nguyen nhan: Cong 8082 dang bi chiem dung boi mot tien trinh khac chay ngam truoc do.
+- Su co: Address already in use khi khoi chay ung dung Spring Boot tren cong 8082 tai may chu VPS.
+- Thong tin may chu VPS thuc te:
+  - Dia chi IP: 103.20.102.126
+  - Hostname: 10320102126523343
+  - He dieu hanh: Ubuntu 24.04 LTS Linux
+- Nguyen nhan: Cong 8082 dang bi chiem dung boi mot tien trinh khac chay ngam truoc do tren he thong.
 
-2. GIA LAP SU CO CHIEM DUNG CONG
+2. GIA LAP SU CO CHIEM DUNG CONG TREN VPS 103.20.102.126
 Lenh khoi chay tien trinh gia lap chay ngam:
 ```bash
 python3 -m http.server 8082 > /dev/null 2>&1 &
@@ -13,7 +17,7 @@ python3 -m http.server 8082 > /dev/null 2>&1 &
 3. QUY TRINH CHAN DOAN VA XAC DINH TIEN TRINH XUNG DOT
 
 3.1. Kiem tra cong mang dang lang nghe (Listening Port)
-Lenh thuc hien bang ss:
+Lenh thuc hien bang ss tren VPS 103.20.102.126:
 ```bash
 sudo ss -tlnp | grep 8082
 ```
@@ -22,7 +26,7 @@ Ket qua dau ra:
 LISTEN 0 5 0.0.0.0:8082 0.0.0.0:* users:(("python3",pid=14238,fd=3))
 ```
 
-Lenh thuc hien bang lsof:
+Lenh thuc hien bang lsof tren VPS 103.20.102.126:
 ```bash
 sudo lsof -i :8082
 ```
@@ -56,13 +60,14 @@ Lenh thuc hien:
 ```bash
 sudo kill 14238
 ```
+(Ghi chu: Neu tien trinh khong dung duoc bang SIGTERM, dung lenh cuong che: sudo kill -9 14238)
 
 4.2. Xac nhan cong da duoc giai phong
-Lenh thuc hien:
+Lenh thuc hien tren VPS 103.20.102.126:
 ```bash
 sudo ss -tlnp | grep 8082
 ```
-Ket qua: Khong con tien trinh python3 lang nghe tren cong 8082.
+Ket qua: Khong con tien trinh python3 lang nghe tren cong 8082 (tra ve rong).
 
 4.3. Khoi dong lai dich vu Spring Boot Systemd
 Lenh thuc hien:
@@ -100,8 +105,8 @@ Ket qua dau ra:
 ```
 
 6. TONG KET CHUOI LENH CHAN DOAN VA XU LY
-1. sudo ss -tlnp | grep 8082 : Tim PID tien trinh chiem cong.
-2. ps -fp <PID> : Xac dinh lenh va chu so huu cua tien trinh.
-3. sudo kill <PID> : Giai phong tai nguyen cong mang.
+1. sudo ss -tlnp | grep 8082 : Tim PID tien trinh chiem cong tren VPS 103.20.102.126.
+2. ps -fp <PID> : Xac dinh lenh va chu so huu cua tien trinh gay xung dot.
+3. sudo kill <PID> : Giai phong tai nguyen cong mang bi chiem dung.
 4. sudo systemctl restart spring-app.service : Khoi dong lai dich vu bi loi.
 5. sudo ss -tlnp | grep 8082 : Xac nhan cong da chuyen sang cho tien trinh hop le (java).
